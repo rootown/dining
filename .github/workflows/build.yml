@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - main
+      - staging
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
@@ -19,6 +19,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+
+      - name: npm install
+        run: npm install
 
       - name: Build 🔧
         run: node index.js
