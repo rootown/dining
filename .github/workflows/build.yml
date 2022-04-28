@@ -1,0 +1,31 @@
+name: Build
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: */30 * * * *
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          
+      - name: Setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Build 🔧
+        run: node index.js
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: master
+          folder: new_json_files
+          ssh-key: ${{ secrets.DEPLOY_KEY_2 }}
